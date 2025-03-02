@@ -15,7 +15,4 @@ package-mode = true
 python = "^3.10"
 nodetool-core = { git = "https://github.com/nodetool-ai/nodetool-core.git", rev = "main" }
 
-# Media dependencies
-pillow = "11.0.0"
 cairosvg = "2.7.1"
-opencv-python-headless = "4.10.0.84"
