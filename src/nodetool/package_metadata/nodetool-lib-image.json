@@ -5,6 +5,7 @@
   "authors": [
     "Matthias Georgi <matti.georgi@gmail.com>"
   ],
+  "repo_id": "nodetool-ai/nodetool-lib-image",
   "nodes": [
     {
       "title": "Combine Image Grid",
@@ -169,7 +170,7 @@
               "ne",
               "sa"
             ],
-            "type_name": "lib.image.ocr.OCRLanguage"
+            "type_name": "nodetool.nodes.lib.image.ocr.OCRLanguage"
           },
           "default": "en",
           "title": "Language",
@@ -618,7 +619,7 @@
               "linearGradient",
               "radialGradient"
             ],
-            "type_name": "lib.image.svg.GradientType"
+            "type_name": "nodetool.nodes.lib.image.svg.GradientType"
           },
           "default": "linearGradient",
           "title": "Gradient Type",
@@ -1180,7 +1181,7 @@
               "middle",
               "end"
             ],
-            "type_name": "lib.image.svg.SVGTextAnchor"
+            "type_name": "nodetool.nodes.lib.image.svg.SVGTextAnchor"
           },
           "default": "start",
           "title": "Text Anchor",
@@ -2232,7 +2233,7 @@
               "G",
               "B"
             ],
-            "type_name": "lib.image.pillow.filter.ChannelEnum"
+            "type_name": "nodetool.nodes.lib.image.pillow.filter.ChannelEnum"
           },
           "default": "R",
           "title": "Channel"
@@ -2562,7 +2563,7 @@
               "Menlo.ttf",
               "Monaco.ttf"
             ],
-            "type_name": "lib.image.pillow.draw.TextFont"
+            "type_name": "nodetool.nodes.lib.image.pillow.draw.TextFont"
           },
           "default": "DejaVuSans.ttf",
           "title": "Font",
@@ -2619,7 +2620,7 @@
               "center",
               "right"
             ],
-            "type_name": "lib.image.pillow.draw.TextAlignment"
+            "type_name": "nodetool.nodes.lib.image.pillow.draw.TextAlignment"
           },
           "default": "left",
           "title": "Align"
