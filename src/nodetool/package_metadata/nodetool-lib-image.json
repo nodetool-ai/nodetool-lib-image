@@ -2658,17 +2658,14 @@
       "is_dynamic": false
     }
   ],
-  "examples": [
+  "assets": [
     {
-      "id": "8977fd6012fb11f09c400000236298c1",
-      "name": "Image Enhance",
-      "description": "Improve image quality with basic enhancement tools like sharpening, contrast and color adjustment",
-      "tags": [
-        "image",
-        "start"
-      ],
-      "thumbnail_url": ""
-    },
+      "package_name": "nodetool-lib-image",
+      "name": "Image Enhance.jpg",
+      "path": "/Users/mg/dev/nodetool-lib-image/src/nodetool/assets/nodetool-lib-image/Image Enhance.jpg"
+    }
+  ],
+  "examples": [
     {
       "id": "8977fd6012fb11f09c400000236298c1",
       "name": "Image Enhance",
