@@ -94,34 +94,14 @@
         "parent_id": null,
         "type": "nodetool.output.ImageOutput",
         "data": {
-          "name": "sharpened",
+          "name": "enhanced",
           "description": ""
         },
         "ui_properties": {
           "selected": false,
           "position": {
-            "x": 470,
-            "y": 50
-          },
-          "zIndex": 0,
-          "width": 159,
-          "selectable": true
-        },
-        "dynamic_properties": {}
-      },
-      {
-        "id": "97878",
-        "parent_id": null,
-        "type": "nodetool.output.ImageOutput",
-        "data": {
-          "name": "contrast",
-          "description": ""
-        },
-        "ui_properties": {
-          "selected": false,
-          "position": {
-            "x": 470,
-            "y": 221
+            "x": 650,
+            "y": 150
           },
           "zIndex": 0,
           "width": 159,
@@ -147,7 +127,7 @@
           "selected": false,
           "position": {
             "x": 50,
-            "y": 73
+            "y": 150
           },
           "zIndex": 0,
           "width": 159,
@@ -164,7 +144,7 @@
           "selected": false,
           "position": {
             "x": 269,
-            "y": 74
+            "y": 150
           },
           "zIndex": 0,
           "width": 171,
@@ -182,8 +162,8 @@
         "ui_properties": {
           "selected": false,
           "position": {
-            "x": 269,
-            "y": 234
+            "x": 460,
+            "y": 150
           },
           "zIndex": 0,
           "width": 171,
@@ -194,14 +174,6 @@
     ],
     "edges": [
       {
-        "id": "aa5315cd-6ff5-4314-92b1-6e819a309ccb",
-        "source": "9d8850a4-c20f-4698-9cb4-e315c956aee6",
-        "sourceHandle": "output",
-        "target": "97877",
-        "targetHandle": "value",
-        "ui_properties": null
-      },
-      {
         "id": "f1509e03-19ac-4795-8083-8903020ba58e",
         "source": "97879",
         "sourceHandle": "output",
@@ -211,7 +183,7 @@
       },
       {
         "id": "b2247412-d88e-4c79-95aa-95ff9120575f",
-        "source": "97879",
+        "source": "9d8850a4-c20f-4698-9cb4-e315c956aee6",
         "sourceHandle": "output",
         "target": "4c9c6b63-646a-4da9-8794-abd180c59041",
         "targetHandle": "image",
@@ -221,7 +193,7 @@
         "id": "82f3bfe6-17b1-4685-b4ef-bb84e4d6f1d1",
         "source": "4c9c6b63-646a-4da9-8794-abd180c59041",
         "sourceHandle": "output",
-        "target": "97878",
+        "target": "97877",
         "targetHandle": "value",
         "ui_properties": null
       }
