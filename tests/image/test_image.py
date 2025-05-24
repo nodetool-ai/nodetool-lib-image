@@ -2,8 +2,8 @@ import pytest
 import numpy as np
 from io import BytesIO
 from PIL import Image
-from nodetool.nodes.lib.data.numpy import ConvertToArray
-from nodetool.nodes.lib.image.pillow import Blend, Composite
+from nodetool.nodes.lib.numpy import ConvertToArray
+from nodetool.nodes.lib.pillow import Blend, Composite
 from nodetool.workflows.processing_context import ProcessingContext
 from nodetool.metadata.types import ImageRef, NPArray, FolderRef
 from nodetool.nodes.nodetool.image import (

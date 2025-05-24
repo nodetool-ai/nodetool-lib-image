@@ -1,6 +1,6 @@
 import pytest
 from nodetool.dsl.graph import graph_result
-from nodetool.dsl.lib.image.pillow.enhance import (
+from nodetool.dsl.lib.pillow.enhance import (
     AutoContrast,
     Brightness,
     Contrast,
@@ -8,7 +8,7 @@ from nodetool.dsl.lib.image.pillow.enhance import (
     Sharpen,
     UnsharpMask,
 )
-from nodetool.dsl.lib.image.pillow.draw import (
+from nodetool.dsl.lib.pillow.draw import (
     Background,
     GaussianNoise,
     RenderText,
