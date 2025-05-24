@@ -1,128 +1,89 @@
 # Nodetool Image Library
 
-A powerful image processing library that provides a collection of nodes for SVG manipulation, OCR (Optical Character Recognition), and image grid operations.
+This package provides a set of reusable nodes for [Nodetool](https://github.com/nodetool-ai/nodetool). The nodes are implemented using [nodetool-core](https://github.com/nodetool-ai/nodetool-core) and can be used inside the Nodetool UI or in custom workflows.
 
-## Features
+## Node Catalog
 
-### SVG Manipulation
+### Pillow Operations
 
-The library provides a comprehensive set of nodes for creating and manipulating SVG elements:
+* **Blend** – blend two images with adjustable alpha.
+* **Composite** – composite two images using a mask.
 
-- Basic Shapes
+**Drawing**
 
-  - Rectangle (`RectNode`)
-  - Circle (`CircleNode`)
-  - Ellipse (`EllipseNode`)
-  - Line (`LineNode`)
-  - Polygon (`PolygonNode`)
-  - Path (`PathNode`)
+* **Background** – create a blank image of a given size and color.
+* **RenderText** – draw text on an image.
+* **GaussianNoise** – generate an image filled with Gaussian noise.
 
-- Text and Typography
+**Enhance**
 
-  - Text elements with customizable properties (`Text`)
-  - Support for different font families, sizes, and alignments
+* **AutoContrast** – automatically adjust contrast.
+* **Sharpness** – control image sharpness.
+* **Equalize** – apply histogram equalization.
+* **Contrast** – adjust contrast level.
+* **EdgeEnhance** – emphasize edges.
+* **Sharpen** – sharpen an image.
+* **RankFilter** – rank based filtering.
+* **UnsharpMask** – sharpen using the unsharp mask technique.
+* **Brightness** – adjust brightness.
+* **Color** – adjust color balance.
+* **Detail** – enhance fine details.
+* **AdaptiveContrast** – CLAHE based contrast enhancement.
 
-- Effects and Styling
+**Filters**
 
-  - Gaussian Blur (`GaussianBlur`)
-  - Drop Shadow (`DropShadow`)
-  - Gradients (`Gradient`)
-  - Transformations (`Transform`)
-  - Clipping Paths (`ClipPath`)
+* **Invert** – invert colors.
+* **Solarize** – apply solarization.
+* **Posterize** – reduce number of colors.
+* **Expand** – add a border around an image.
+* **Blur** – Gaussian blur.
+* **Contour** – contour detection filter.
+* **Emboss** – emboss effect.
+* **FindEdges** – edge detection.
+* **Smooth** – smooth an image.
+* **Canny** – Canny edge detection.
+* **ConvertToGrayscale** – convert to grayscale.
+* **GetChannel** – extract a single color channel.
 
-- Document Management
-  - SVG Document creation and manipulation (`Document`)
-  - SVG to raster image conversion (`SVGToImage`)
+### SVG Generation
 
-### Optical Character Recognition (OCR)
+Nodes for creating and manipulating SVG graphics:
 
-The library includes powerful OCR capabilities using PaddleOCR:
+* **RectNode**, **CircleNode**, **EllipseNode**, **LineNode**, **PolygonNode**, **PathNode** – basic shapes.
+* **Text** – add text elements.
+* **GaussianBlur**, **DropShadow**, **Gradient**, **Transform**, **ClipPath** – SVG filters and effects.
+* **Document** – build an SVG document from elements.
+* **SVGToImage** – rasterize an SVG document to an image.
 
-- Support for multiple languages including:
+### OCR
 
-  - Latin script languages (English, French, German, Spanish, etc.)
-  - Cyrillic script languages (Russian, Bulgarian, Ukrainian, etc.)
-  - CJK languages (Chinese, Japanese, Korean)
-  - Arabic script languages
-  - Indic scripts
+* **PaddleOCRNode** – run Optical Character Recognition using PaddleOCR with support for many languages.
 
-- Use cases:
-  - Text extraction from images
-  - Document digitization
-  - Receipt/invoice processing
-  - Handwriting recognition
+### Image Grids
 
-### Image Grid Operations
-
-Tools for handling large images and tiled processing:
-
-- `SliceImageGrid`: Split images into customizable grids
-
-  - Control over columns and rows
-  - Support for overlap between tiles
-  - Useful for processing large images in chunks
-
-- `CombineImageGrid`: Merge image tiles back into a single image
-  - Automatic handling of grid layout
-  - Perfect for reassembling processed chunks
-
-## Usage Examples
-
-### Creating an SVG Shape
-
-```python
-rect_node = RectNode(
-    x=10,
-    y=10,
-    width=100,
-    height=50,
-    fill=ColorRef(value="#FF0000"),
-    stroke=ColorRef(value="#000000"),
-    stroke_width=2
-)
-```
-
-### Performing OCR
-
-```python
-ocr_node = PaddleOCRNode(
-    image=image_ref,
-    language=OCRLanguage.ENGLISH
-)
-```
-
-### Processing Large Images
-
-```python
-# Slice image into grid
-slice_node = SliceImageGrid(
-    image=large_image,
-    columns=3,
-    rows=3
-)
-
-# Process tiles...
-
-# Recombine processed tiles
-combine_node = CombineImageGrid(
-    tiles=processed_tiles,
-    columns=3
-)
-```
+* **SliceImageGrid** – cut an image into a grid of tiles.
+* **CombineImageGrid** – recombine tiles back into a single image.
 
 ## Installation
 
-Install in the Nodetool UI or manually:
+Install directly in the Nodetool UI or with the CLI:
 
 ```bash
 nodetool-package install nodetool-ai/nodetool-lib-image
 ```
 
-## Dependencies
+## Example
 
-- PIL/Pillow
-- PaddleOCR
-- Pydantic
+```python
+from nodetool.nodes.lib.pillow.enhance import AutoContrast
+from nodetool.nodes.lib.pillow.filter import Blur
+
+# enhance an image
+node1 = AutoContrast(image=input_img)
+node2 = Blur(image=node1.output, radius=2)
+```
+
+See the [Nodetool](https://github.com/nodetool-ai/nodetool) documentation for details on how to build full workflows.
 
 ## License
 
