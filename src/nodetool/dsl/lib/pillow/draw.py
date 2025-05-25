@@ -1,8 +1,9 @@
-from pydantic import Field
+from pydantic import BaseModel, Field
 import typing
+from typing import Any
+import nodetool.metadata.types
 import nodetool.metadata.types as types
 from nodetool.dsl.graph import GraphNode
-import nodetool.nodes.lib.pillow.draw  # noqa: E402
 
 
 class Background(GraphNode):
@@ -61,6 +62,10 @@ class GaussianNoise(GraphNode):
     @classmethod
     def get_node_type(cls):
         return "lib.pillow.draw.GaussianNoise"
+
+
+import nodetool.nodes.lib.pillow.draw
+import nodetool.nodes.lib.pillow.draw
 
 
 class RenderText(GraphNode):

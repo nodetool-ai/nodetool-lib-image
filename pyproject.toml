@@ -11,7 +11,7 @@ authors = ["Matthias Georgi <matti.georgi@gmail.com>"]
 packages = [{ include = "nodetool", from = "src" }]
 package-mode = true
 repository = "https://github.com/nodetool-ai/nodetool-lib-image"
-include = ["src/nodetool/package-metadata/nodetool-lib-image.json"]
+include = ["src/nodetool/package_metadata/nodetool-lib-image.json", "src/nodetool/assets/nodetool-lib-image/Image Enhance.jpg"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
