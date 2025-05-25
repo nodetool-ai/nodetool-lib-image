@@ -2,10 +2,11 @@ import math
 import PIL.Image
 from nodetool.workflows.base_node import BaseNode
 from nodetool.workflows.processing_context import ProcessingContext
-from nodetool.metadata.types import ImageRef, Field
+from nodetool.metadata.types import ImageRef
+from pydantic import Field
 
 from typing import List
-from PIL import Image, ImageChops, ImageDraw
+from PIL import Image, ImageDraw
 
 
 class Tile:

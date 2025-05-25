@@ -1,4 +1,3 @@
-from typing import Any
 from nodetool.workflows.processing_context import ProcessingContext
 from nodetool.metadata.types import ImageRef
 from nodetool.workflows.base_node import BaseNode

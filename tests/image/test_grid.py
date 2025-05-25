@@ -1,7 +1,6 @@
 import pytest
 from typing import List, Tuple
 from PIL import Image
-import numpy as np
 
 from nodetool.nodes.lib.grid import Tile, combine_grid, make_grid
 

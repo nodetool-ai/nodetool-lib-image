@@ -1,9 +1,9 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
+from pydantic.fields import PydanticUndefined
 import typing
-from typing import Any
-import nodetool.metadata.types
 import nodetool.metadata.types as types
 from nodetool.dsl.graph import GraphNode
+import nodetool.nodes.lib.svg  # noqa: E402
 
 
 class CircleNode(GraphNode):
@@ -163,9 +163,6 @@ class GaussianBlur(GraphNode):
     @classmethod
     def get_node_type(cls):
         return "lib.svg.GaussianBlur"
-
-
-import nodetool.nodes.lib.svg
 
 
 class Gradient(GraphNode):
@@ -356,9 +353,6 @@ class SVGToImage(GraphNode):
     @classmethod
     def get_node_type(cls):
         return "lib.svg.SVGToImage"
-
-
-import nodetool.nodes.lib.svg
 
 
 class Text(GraphNode):
