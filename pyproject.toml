@@ -11,10 +11,13 @@ authors = ["Matthias Georgi <matti.georgi@gmail.com>"]
 packages = [{ include = "nodetool", from = "src" }]
 package-mode = true
 repository = "https://github.com/nodetool-ai/nodetool-lib-image"
-include = ["src/nodetool/package_metadata/nodetool-lib-image.json", "src/nodetool/assets/nodetool-lib-image/Image Enhance.jpg"]
+include = [
+    "src/nodetool/package_metadata/nodetool-lib-image.json",
+    "src/nodetool/assets/nodetool-lib-image/Image Enhance.jpg",
+]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.11"
 nodetool-core = { git = "https://github.com/nodetool-ai/nodetool-core.git", rev = "main" }
 
 cairosvg = "2.7.1"
