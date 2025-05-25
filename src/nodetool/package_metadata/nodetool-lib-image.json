@@ -115,66 +115,20 @@
       "is_dynamic": false
     },
     {
-      "title": "Paddle OCR",
-      "description": "Performs Optical Character Recognition (OCR) on images using PaddleOCR.\n    image, text, ocr, document\n\n    Use cases:\n    - Text extraction from images\n    - Document digitization\n    - Receipt/invoice processing\n    - Handwriting recognition",
-      "namespace": "lib.ocr",
-      "node_type": "lib.ocr.PaddleOCR",
+      "title": "Batch To List",
+      "description": "Convert a batch image into a list of images.",
+      "namespace": "lib.image",
+      "node_type": "lib.image.BatchToList",
       "layout": "default",
       "properties": [
         {
-          "name": "image",
+          "name": "batch",
           "type": {
             "type": "image"
           },
           "default": {},
-          "title": "Input Image",
-          "description": "The image to perform OCR on"
-        },
-        {
-          "name": "language",
-          "type": {
-            "type": "enum",
-            "values": [
-              "en",
-              "fr",
-              "de",
-              "es",
-              "it",
-              "pt",
-              "nl",
-              "pl",
-              "ro",
-              "hr",
-              "cs",
-              "hu",
-              "sk",
-              "sl",
-              "tr",
-              "vi",
-              "id",
-              "ms",
-              "la",
-              "ru",
-              "bg",
-              "uk",
-              "be",
-              "mn",
-              "ch",
-              "ja",
-              "ko",
-              "ar",
-              "fa",
-              "ur",
-              "hi",
-              "mr",
-              "ne",
-              "sa"
-            ],
-            "type_name": "nodetool.nodes.lib.ocr.OCRLanguage"
-          },
-          "default": "en",
-          "title": "Language",
-          "description": "Language code for OCR"
+          "title": "Batch",
+          "description": "Batch of images"
         }
       ],
       "outputs": [
@@ -183,24 +137,427 @@
             "type": "list",
             "type_args": [
               {
-                "type": "ocr_result"
+                "type": "image"
               }
             ]
           },
-          "name": "boxes"
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "batch"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Crop",
+      "description": "Crop an image region.",
+      "namespace": "lib.image",
+      "node_type": "lib.image.Crop",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "Image to crop"
         },
         {
+          "name": "left",
           "type": {
-            "type": "str"
+            "type": "int"
           },
-          "name": "text"
+          "default": 0,
+          "title": "Left",
+          "description": "Left",
+          "min": 0.0
+        },
+        {
+          "name": "top",
+          "type": {
+            "type": "int"
+          },
+          "default": 0,
+          "title": "Top",
+          "description": "Top",
+          "min": 0.0
+        },
+        {
+          "name": "right",
+          "type": {
+            "type": "int"
+          },
+          "default": 1,
+          "title": "Right",
+          "description": "Right",
+          "min": 1.0
+        },
+        {
+          "name": "bottom",
+          "type": {
+            "type": "int"
+          },
+          "default": 1,
+          "title": "Bottom",
+          "description": "Bottom",
+          "min": 1.0
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
         }
       ],
       "the_model_info": {},
       "recommended_models": [],
       "basic_fields": [
         "image",
-        "language"
+        "left",
+        "top",
+        "right",
+        "bottom"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Fit",
+      "description": "Resize and crop an image to fit the given size.",
+      "namespace": "lib.image",
+      "node_type": "lib.image.Fit",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "Image to fit"
+        },
+        {
+          "name": "width",
+          "type": {
+            "type": "int"
+          },
+          "default": 512,
+          "title": "Width",
+          "description": "Target width",
+          "min": 1.0
+        },
+        {
+          "name": "height",
+          "type": {
+            "type": "int"
+          },
+          "default": 512,
+          "title": "Height",
+          "description": "Target height",
+          "min": 1.0
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image",
+        "width",
+        "height"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Get Metadata",
+      "description": "Return basic image metadata.",
+      "namespace": "lib.image",
+      "node_type": "lib.image.GetMetadata",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "Image to inspect."
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "dict"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Image Output",
+      "description": "Workflow output for images.",
+      "namespace": "lib.image",
+      "node_type": "lib.image.ImageOutput",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "value",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Value",
+          "description": "Image value"
+        },
+        {
+          "name": "name",
+          "type": {
+            "type": "str"
+          },
+          "default": "",
+          "title": "Name",
+          "description": "The parameter name for the workflow."
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "value"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Paste",
+      "description": "Paste one image onto another.",
+      "namespace": "lib.image",
+      "node_type": "lib.image.Paste",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "Base image"
+        },
+        {
+          "name": "paste",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Paste",
+          "description": "Image to paste"
+        },
+        {
+          "name": "left",
+          "type": {
+            "type": "int"
+          },
+          "default": 0,
+          "title": "Left",
+          "description": "Left position"
+        },
+        {
+          "name": "top",
+          "type": {
+            "type": "int"
+          },
+          "default": 0,
+          "title": "Top",
+          "description": "Top position"
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image",
+        "paste"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Resize",
+      "description": "Resize an image to specific dimensions.",
+      "namespace": "lib.image",
+      "node_type": "lib.image.Resize",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "Image to resize"
+        },
+        {
+          "name": "width",
+          "type": {
+            "type": "int"
+          },
+          "default": 512,
+          "title": "Width",
+          "description": "Width",
+          "min": 1.0
+        },
+        {
+          "name": "height",
+          "type": {
+            "type": "int"
+          },
+          "default": 512,
+          "title": "Height",
+          "description": "Height",
+          "min": 1.0
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image",
+        "width",
+        "height"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Save Image",
+      "description": "Save an image reference.",
+      "namespace": "lib.image",
+      "node_type": "lib.image.SaveImage",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "Image to save."
+        },
+        {
+          "name": "folder",
+          "type": {
+            "type": "folder"
+          },
+          "default": {},
+          "title": "Folder",
+          "description": "Target folder."
+        },
+        {
+          "name": "name",
+          "type": {
+            "type": "str"
+          },
+          "default": "image.png",
+          "title": "Name",
+          "description": "File name"
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Scale",
+      "description": "Scale an image by a factor.",
+      "namespace": "lib.image",
+      "node_type": "lib.image.Scale",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "Image to scale"
+        },
+        {
+          "name": "scale",
+          "type": {
+            "type": "float"
+          },
+          "default": 1.0,
+          "title": "Scale",
+          "description": "Scale factor",
+          "min": 0.0
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image",
+        "scale"
       ],
       "is_dynamic": false
     },
@@ -1291,6 +1648,489 @@
       "is_dynamic": false
     },
     {
+      "title": "Blur",
+      "description": "Apply a Gaussian blur effect to an image.\n    image, filter, blur\n\n    - Soften images or reduce noise and detail\n    - Make focal areas stand out by blurring surroundings\n    - Protect privacy by blurring sensitive information",
+      "namespace": "lib.pillow.filter",
+      "node_type": "lib.pillow.filter.Blur",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "The image to blur."
+        },
+        {
+          "name": "radius",
+          "type": {
+            "type": "int"
+          },
+          "default": 2,
+          "title": "Radius",
+          "description": "Blur radius.",
+          "min": 0.0,
+          "max": 128.0
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image",
+        "radius"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Canny",
+      "description": "Apply Canny edge detection to an image.\n    image, filter, edges\n\n    - Highlight areas of rapid intensity change\n    - Outline object boundaries and structure\n    - Enhance inputs for object detection and image segmentation",
+      "namespace": "lib.pillow.filter",
+      "node_type": "lib.pillow.filter.Canny",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "The image to canny."
+        },
+        {
+          "name": "low_threshold",
+          "type": {
+            "type": "int"
+          },
+          "default": 100,
+          "title": "Low Threshold",
+          "description": "Low threshold.",
+          "min": 0.0,
+          "max": 255.0
+        },
+        {
+          "name": "high_threshold",
+          "type": {
+            "type": "int"
+          },
+          "default": 200,
+          "title": "High Threshold",
+          "description": "High threshold.",
+          "min": 0.0,
+          "max": 255.0
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image",
+        "low_threshold",
+        "high_threshold"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Contour",
+      "description": "Apply a contour filter to highlight image edges.\n    image, filter, contour\n\n    - Extract key features from complex images\n    - Aid pattern recognition and object detection\n    - Create stylized contour sketch art effects",
+      "namespace": "lib.pillow.filter",
+      "node_type": "lib.pillow.filter.Contour",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "The image to contour."
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Convert To Grayscale",
+      "description": "Convert an image to grayscale.\n    image, grayscale\n\n    - Simplify images for feature and edge detection\n    - Prepare images for shape-based machine learning\n    - Create vintage or monochrome aesthetic effects",
+      "namespace": "lib.pillow.filter",
+      "node_type": "lib.pillow.filter.ConvertToGrayscale",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "The image to convert."
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Emboss",
+      "description": "Apply an emboss filter for a 3D raised effect.\n    image, filter, emboss\n\n    - Add texture and depth to photos\n    - Create visually interesting graphics\n    - Incorporate unique effects in digital artwork",
+      "namespace": "lib.pillow.filter",
+      "node_type": "lib.pillow.filter.Emboss",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "The image to emboss."
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Expand",
+      "description": "Add a border around an image to increase its size.\n    image, border, expand\n\n    - Make images stand out by adding a colored border\n    - Create framed photo effects\n    - Separate image content from surroundings",
+      "namespace": "lib.pillow.filter",
+      "node_type": "lib.pillow.filter.Expand",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "The image to expand."
+        },
+        {
+          "name": "border",
+          "type": {
+            "type": "int"
+          },
+          "default": 0,
+          "title": "Border",
+          "description": "Border size.",
+          "min": 0.0,
+          "max": 512.0
+        },
+        {
+          "name": "fill",
+          "type": {
+            "type": "int"
+          },
+          "default": 0,
+          "title": "Fill",
+          "description": "Fill color.",
+          "min": 0.0,
+          "max": 255.0
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image",
+        "border",
+        "fill"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Find Edges",
+      "description": "Detect and highlight edges in an image.\n    image, filter, edges\n\n    - Analyze structural patterns in images\n    - Aid object detection in computer vision\n    - Detect important features like corners and ridges",
+      "namespace": "lib.pillow.filter",
+      "node_type": "lib.pillow.filter.FindEdges",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "The image to find edges."
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Get Channel",
+      "description": "Extract a specific color channel from an image.\n    image, color, channel, isolate, extract\n\n    - Isolate color information for image analysis\n    - Manipulate specific color components in graphic design\n    - Enhance or reduce visibility of certain colors",
+      "namespace": "lib.pillow.filter",
+      "node_type": "lib.pillow.filter.GetChannel",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "The image to get the channel from."
+        },
+        {
+          "name": "channel",
+          "type": {
+            "type": "enum",
+            "values": [
+              "R",
+              "G",
+              "B"
+            ],
+            "type_name": "nodetool.nodes.lib.pillow.filter.ChannelEnum"
+          },
+          "default": "R",
+          "title": "Channel"
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image",
+        "channel"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Invert",
+      "description": "Invert the colors of an image.\n    image, filter, invert\n\n    - Create negative versions of images for visual effects\n    - Analyze image data by bringing out hidden details\n    - Preprocess images for operations that work better on inverted colors",
+      "namespace": "lib.pillow.filter",
+      "node_type": "lib.pillow.filter.Invert",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "The image to adjust the brightness for."
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Posterize",
+      "description": "Reduce the number of colors in an image for a poster-like effect.\n    image, filter, posterize\n\n    - Create graphic art by simplifying image colors\n    - Apply artistic effects to photographs\n    - Generate visually compelling content for advertising",
+      "namespace": "lib.pillow.filter",
+      "node_type": "lib.pillow.filter.Posterize",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "The image to posterize."
+        },
+        {
+          "name": "bits",
+          "type": {
+            "type": "int"
+          },
+          "default": 4,
+          "title": "Bits",
+          "description": "Number of bits to posterize to.",
+          "min": 1.0,
+          "max": 8.0
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image",
+        "bits"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Smooth",
+      "description": "Apply smoothing to reduce image noise and detail.\n    image, filter, smooth\n\n    - Enhance visual aesthetics of images\n    - Improve object detection by reducing irrelevant details\n    - Aid facial recognition by simplifying images",
+      "namespace": "lib.pillow.filter",
+      "node_type": "lib.pillow.filter.Smooth",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "The image to smooth."
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Solarize",
+      "description": "Apply a solarize effect to partially invert image tones.\n    image, filter, solarize\n\n    - Create surreal artistic photo effects\n    - Enhance visual data by making certain elements more prominent\n    - Add a unique style to images for graphic design",
+      "namespace": "lib.pillow.filter",
+      "node_type": "lib.pillow.filter.Solarize",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image",
+          "description": "The image to solarize."
+        },
+        {
+          "name": "threshold",
+          "type": {
+            "type": "int"
+          },
+          "default": 128,
+          "title": "Threshold",
+          "description": "Threshold for solarization.",
+          "min": 0.0,
+          "max": 255.0
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image",
+        "threshold"
+      ],
+      "is_dynamic": false
+    },
+    {
       "title": "Adaptive Contrast",
       "description": "Applies localized contrast enhancement using adaptive techniques.\n    image, contrast, enhance\n\n    Use cases:\n    - Improve visibility in images with varying lighting conditions\n    - Prepare images for improved feature detection in computer vision",
       "namespace": "lib.pillow.enhance",
@@ -1819,595 +2659,6 @@
       "is_dynamic": false
     },
     {
-      "title": "Blend",
-      "description": "Blend two images with adjustable alpha mixing.\n    blend, mix, fade, transition\n\n    Use cases:\n    - Create smooth transitions between images\n    - Adjust opacity of overlays\n    - Combine multiple exposures or effects",
-      "namespace": "lib.pillow.__init__",
-      "node_type": "lib.pillow.__init__.Blend",
-      "layout": "default",
-      "properties": [
-        {
-          "name": "image1",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image1",
-          "description": "The first image to blend."
-        },
-        {
-          "name": "image2",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image2",
-          "description": "The second image to blend."
-        },
-        {
-          "name": "alpha",
-          "type": {
-            "type": "float"
-          },
-          "default": 0.5,
-          "title": "Alpha",
-          "description": "The mix ratio.",
-          "min": 0.0,
-          "max": 1.0
-        }
-      ],
-      "outputs": [
-        {
-          "type": {
-            "type": "image"
-          },
-          "name": "output"
-        }
-      ],
-      "the_model_info": {},
-      "recommended_models": [],
-      "basic_fields": [
-        "image1",
-        "image2",
-        "alpha"
-      ],
-      "is_dynamic": false
-    },
-    {
-      "title": "Composite",
-      "description": "Combine two images using a mask for advanced compositing.\n    composite, mask, blend, layering\n\n    Use cases:\n    - Create complex image compositions\n    - Apply selective blending or effects\n    - Implement advanced photo editing techniques",
-      "namespace": "lib.pillow.__init__",
-      "node_type": "lib.pillow.__init__.Composite",
-      "layout": "default",
-      "properties": [
-        {
-          "name": "image1",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image1",
-          "description": "The first image to composite."
-        },
-        {
-          "name": "image2",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image2",
-          "description": "The second image to composite."
-        },
-        {
-          "name": "mask",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Mask",
-          "description": "The mask to composite with."
-        }
-      ],
-      "outputs": [
-        {
-          "type": {
-            "type": "image"
-          },
-          "name": "output"
-        }
-      ],
-      "the_model_info": {},
-      "recommended_models": [],
-      "basic_fields": [
-        "image1",
-        "image2",
-        "mask"
-      ],
-      "is_dynamic": false
-    },
-    {
-      "title": "Blur",
-      "description": "Apply a Gaussian blur effect to an image.\n    image, filter, blur\n\n    - Soften images or reduce noise and detail\n    - Make focal areas stand out by blurring surroundings\n    - Protect privacy by blurring sensitive information",
-      "namespace": "lib.pillow.filter",
-      "node_type": "lib.pillow.filter.Blur",
-      "layout": "default",
-      "properties": [
-        {
-          "name": "image",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image",
-          "description": "The image to blur."
-        },
-        {
-          "name": "radius",
-          "type": {
-            "type": "int"
-          },
-          "default": 2,
-          "title": "Radius",
-          "description": "Blur radius.",
-          "min": 0.0,
-          "max": 128.0
-        }
-      ],
-      "outputs": [
-        {
-          "type": {
-            "type": "image"
-          },
-          "name": "output"
-        }
-      ],
-      "the_model_info": {},
-      "recommended_models": [],
-      "basic_fields": [
-        "image",
-        "radius"
-      ],
-      "is_dynamic": false
-    },
-    {
-      "title": "Canny",
-      "description": "Apply Canny edge detection to an image.\n    image, filter, edges\n\n    - Highlight areas of rapid intensity change\n    - Outline object boundaries and structure\n    - Enhance inputs for object detection and image segmentation",
-      "namespace": "lib.pillow.filter",
-      "node_type": "lib.pillow.filter.Canny",
-      "layout": "default",
-      "properties": [
-        {
-          "name": "image",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image",
-          "description": "The image to canny."
-        },
-        {
-          "name": "low_threshold",
-          "type": {
-            "type": "int"
-          },
-          "default": 100,
-          "title": "Low Threshold",
-          "description": "Low threshold.",
-          "min": 0.0,
-          "max": 255.0
-        },
-        {
-          "name": "high_threshold",
-          "type": {
-            "type": "int"
-          },
-          "default": 200,
-          "title": "High Threshold",
-          "description": "High threshold.",
-          "min": 0.0,
-          "max": 255.0
-        }
-      ],
-      "outputs": [
-        {
-          "type": {
-            "type": "image"
-          },
-          "name": "output"
-        }
-      ],
-      "the_model_info": {},
-      "recommended_models": [],
-      "basic_fields": [
-        "image",
-        "low_threshold",
-        "high_threshold"
-      ],
-      "is_dynamic": false
-    },
-    {
-      "title": "Contour",
-      "description": "Apply a contour filter to highlight image edges.\n    image, filter, contour\n\n    - Extract key features from complex images\n    - Aid pattern recognition and object detection\n    - Create stylized contour sketch art effects",
-      "namespace": "lib.pillow.filter",
-      "node_type": "lib.pillow.filter.Contour",
-      "layout": "default",
-      "properties": [
-        {
-          "name": "image",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image",
-          "description": "The image to contour."
-        }
-      ],
-      "outputs": [
-        {
-          "type": {
-            "type": "image"
-          },
-          "name": "output"
-        }
-      ],
-      "the_model_info": {},
-      "recommended_models": [],
-      "basic_fields": [
-        "image"
-      ],
-      "is_dynamic": false
-    },
-    {
-      "title": "Convert To Grayscale",
-      "description": "Convert an image to grayscale.\n    image, grayscale\n\n    - Simplify images for feature and edge detection\n    - Prepare images for shape-based machine learning\n    - Create vintage or monochrome aesthetic effects",
-      "namespace": "lib.pillow.filter",
-      "node_type": "lib.pillow.filter.ConvertToGrayscale",
-      "layout": "default",
-      "properties": [
-        {
-          "name": "image",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image",
-          "description": "The image to convert."
-        }
-      ],
-      "outputs": [
-        {
-          "type": {
-            "type": "image"
-          },
-          "name": "output"
-        }
-      ],
-      "the_model_info": {},
-      "recommended_models": [],
-      "basic_fields": [
-        "image"
-      ],
-      "is_dynamic": false
-    },
-    {
-      "title": "Emboss",
-      "description": "Apply an emboss filter for a 3D raised effect.\n    image, filter, emboss\n\n    - Add texture and depth to photos\n    - Create visually interesting graphics\n    - Incorporate unique effects in digital artwork",
-      "namespace": "lib.pillow.filter",
-      "node_type": "lib.pillow.filter.Emboss",
-      "layout": "default",
-      "properties": [
-        {
-          "name": "image",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image",
-          "description": "The image to emboss."
-        }
-      ],
-      "outputs": [
-        {
-          "type": {
-            "type": "image"
-          },
-          "name": "output"
-        }
-      ],
-      "the_model_info": {},
-      "recommended_models": [],
-      "basic_fields": [
-        "image"
-      ],
-      "is_dynamic": false
-    },
-    {
-      "title": "Expand",
-      "description": "Add a border around an image to increase its size.\n    image, border, expand\n\n    - Make images stand out by adding a colored border\n    - Create framed photo effects\n    - Separate image content from surroundings",
-      "namespace": "lib.pillow.filter",
-      "node_type": "lib.pillow.filter.Expand",
-      "layout": "default",
-      "properties": [
-        {
-          "name": "image",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image",
-          "description": "The image to expand."
-        },
-        {
-          "name": "border",
-          "type": {
-            "type": "int"
-          },
-          "default": 0,
-          "title": "Border",
-          "description": "Border size.",
-          "min": 0.0,
-          "max": 512.0
-        },
-        {
-          "name": "fill",
-          "type": {
-            "type": "int"
-          },
-          "default": 0,
-          "title": "Fill",
-          "description": "Fill color.",
-          "min": 0.0,
-          "max": 255.0
-        }
-      ],
-      "outputs": [
-        {
-          "type": {
-            "type": "image"
-          },
-          "name": "output"
-        }
-      ],
-      "the_model_info": {},
-      "recommended_models": [],
-      "basic_fields": [
-        "image",
-        "border",
-        "fill"
-      ],
-      "is_dynamic": false
-    },
-    {
-      "title": "Find Edges",
-      "description": "Detect and highlight edges in an image.\n    image, filter, edges\n\n    - Analyze structural patterns in images\n    - Aid object detection in computer vision\n    - Detect important features like corners and ridges",
-      "namespace": "lib.pillow.filter",
-      "node_type": "lib.pillow.filter.FindEdges",
-      "layout": "default",
-      "properties": [
-        {
-          "name": "image",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image",
-          "description": "The image to find edges."
-        }
-      ],
-      "outputs": [
-        {
-          "type": {
-            "type": "image"
-          },
-          "name": "output"
-        }
-      ],
-      "the_model_info": {},
-      "recommended_models": [],
-      "basic_fields": [
-        "image"
-      ],
-      "is_dynamic": false
-    },
-    {
-      "title": "Get Channel",
-      "description": "Extract a specific color channel from an image.\n    image, color, channel, isolate, extract\n\n    - Isolate color information for image analysis\n    - Manipulate specific color components in graphic design\n    - Enhance or reduce visibility of certain colors",
-      "namespace": "lib.pillow.filter",
-      "node_type": "lib.pillow.filter.GetChannel",
-      "layout": "default",
-      "properties": [
-        {
-          "name": "image",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image",
-          "description": "The image to get the channel from."
-        },
-        {
-          "name": "channel",
-          "type": {
-            "type": "enum",
-            "values": [
-              "R",
-              "G",
-              "B"
-            ],
-            "type_name": "nodetool.nodes.lib.pillow.filter.ChannelEnum"
-          },
-          "default": "R",
-          "title": "Channel"
-        }
-      ],
-      "outputs": [
-        {
-          "type": {
-            "type": "image"
-          },
-          "name": "output"
-        }
-      ],
-      "the_model_info": {},
-      "recommended_models": [],
-      "basic_fields": [
-        "image",
-        "channel"
-      ],
-      "is_dynamic": false
-    },
-    {
-      "title": "Invert",
-      "description": "Invert the colors of an image.\n    image, filter, invert\n\n    - Create negative versions of images for visual effects\n    - Analyze image data by bringing out hidden details\n    - Preprocess images for operations that work better on inverted colors",
-      "namespace": "lib.pillow.filter",
-      "node_type": "lib.pillow.filter.Invert",
-      "layout": "default",
-      "properties": [
-        {
-          "name": "image",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image",
-          "description": "The image to adjust the brightness for."
-        }
-      ],
-      "outputs": [
-        {
-          "type": {
-            "type": "image"
-          },
-          "name": "output"
-        }
-      ],
-      "the_model_info": {},
-      "recommended_models": [],
-      "basic_fields": [
-        "image"
-      ],
-      "is_dynamic": false
-    },
-    {
-      "title": "Posterize",
-      "description": "Reduce the number of colors in an image for a poster-like effect.\n    image, filter, posterize\n\n    - Create graphic art by simplifying image colors\n    - Apply artistic effects to photographs\n    - Generate visually compelling content for advertising",
-      "namespace": "lib.pillow.filter",
-      "node_type": "lib.pillow.filter.Posterize",
-      "layout": "default",
-      "properties": [
-        {
-          "name": "image",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image",
-          "description": "The image to posterize."
-        },
-        {
-          "name": "bits",
-          "type": {
-            "type": "int"
-          },
-          "default": 4,
-          "title": "Bits",
-          "description": "Number of bits to posterize to.",
-          "min": 1.0,
-          "max": 8.0
-        }
-      ],
-      "outputs": [
-        {
-          "type": {
-            "type": "image"
-          },
-          "name": "output"
-        }
-      ],
-      "the_model_info": {},
-      "recommended_models": [],
-      "basic_fields": [
-        "image",
-        "bits"
-      ],
-      "is_dynamic": false
-    },
-    {
-      "title": "Smooth",
-      "description": "Apply smoothing to reduce image noise and detail.\n    image, filter, smooth\n\n    - Enhance visual aesthetics of images\n    - Improve object detection by reducing irrelevant details\n    - Aid facial recognition by simplifying images",
-      "namespace": "lib.pillow.filter",
-      "node_type": "lib.pillow.filter.Smooth",
-      "layout": "default",
-      "properties": [
-        {
-          "name": "image",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image",
-          "description": "The image to smooth."
-        }
-      ],
-      "outputs": [
-        {
-          "type": {
-            "type": "image"
-          },
-          "name": "output"
-        }
-      ],
-      "the_model_info": {},
-      "recommended_models": [],
-      "basic_fields": [
-        "image"
-      ],
-      "is_dynamic": false
-    },
-    {
-      "title": "Solarize",
-      "description": "Apply a solarize effect to partially invert image tones.\n    image, filter, solarize\n\n    - Create surreal artistic photo effects\n    - Enhance visual data by making certain elements more prominent\n    - Add a unique style to images for graphic design",
-      "namespace": "lib.pillow.filter",
-      "node_type": "lib.pillow.filter.Solarize",
-      "layout": "default",
-      "properties": [
-        {
-          "name": "image",
-          "type": {
-            "type": "image"
-          },
-          "default": {},
-          "title": "Image",
-          "description": "The image to solarize."
-        },
-        {
-          "name": "threshold",
-          "type": {
-            "type": "int"
-          },
-          "default": 128,
-          "title": "Threshold",
-          "description": "Threshold for solarization.",
-          "min": 0.0,
-          "max": 255.0
-        }
-      ],
-      "outputs": [
-        {
-          "type": {
-            "type": "image"
-          },
-          "name": "output"
-        }
-      ],
-      "the_model_info": {},
-      "recommended_models": [],
-      "basic_fields": [
-        "image",
-        "threshold"
-      ],
-      "is_dynamic": false
-    },
-    {
       "title": "Background",
       "description": "The Background Node creates a blank background.\n    image, background, blank, base, layer\n    This node is mainly used for generating a base layer for image processing tasks. It produces a uniform image, having a user-specified width, height and color. The color is given in a hexadecimal format, defaulting to white if not specified.\n\n    #### Applications\n    - As a base layer for creating composite images.\n    - As a starting point for generating patterns or graphics.\n    - When blank backgrounds of specific colors are required for visualization tasks.",
       "namespace": "lib.pillow.draw",
@@ -2654,6 +2905,112 @@
         "color",
         "align",
         "image"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Blend",
+      "description": "Blend two images with adjustable alpha mixing.\n    blend, mix, fade, transition\n\n    Use cases:\n    - Create smooth transitions between images\n    - Adjust opacity of overlays\n    - Combine multiple exposures or effects",
+      "namespace": "lib.pillow.__init__",
+      "node_type": "lib.pillow.__init__.Blend",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image1",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image1",
+          "description": "The first image to blend."
+        },
+        {
+          "name": "image2",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image2",
+          "description": "The second image to blend."
+        },
+        {
+          "name": "alpha",
+          "type": {
+            "type": "float"
+          },
+          "default": 0.5,
+          "title": "Alpha",
+          "description": "The mix ratio.",
+          "min": 0.0,
+          "max": 1.0
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image1",
+        "image2",
+        "alpha"
+      ],
+      "is_dynamic": false
+    },
+    {
+      "title": "Composite",
+      "description": "Combine two images using a mask for advanced compositing.\n    composite, mask, blend, layering\n\n    Use cases:\n    - Create complex image compositions\n    - Apply selective blending or effects\n    - Implement advanced photo editing techniques",
+      "namespace": "lib.pillow.__init__",
+      "node_type": "lib.pillow.__init__.Composite",
+      "layout": "default",
+      "properties": [
+        {
+          "name": "image1",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image1",
+          "description": "The first image to composite."
+        },
+        {
+          "name": "image2",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Image2",
+          "description": "The second image to composite."
+        },
+        {
+          "name": "mask",
+          "type": {
+            "type": "image"
+          },
+          "default": {},
+          "title": "Mask",
+          "description": "The mask to composite with."
+        }
+      ],
+      "outputs": [
+        {
+          "type": {
+            "type": "image"
+          },
+          "name": "output"
+        }
+      ],
+      "the_model_info": {},
+      "recommended_models": [],
+      "basic_fields": [
+        "image1",
+        "image2",
+        "mask"
       ],
       "is_dynamic": false
     }
