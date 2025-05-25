@@ -1,3 +1,4 @@
+from nodetool.metadata.types import ColorRef
 import pytest
 from nodetool.dsl.graph import graph_result
 from nodetool.dsl.lib.pillow.enhance import (
@@ -13,7 +14,6 @@ from nodetool.dsl.lib.pillow.draw import (
     GaussianNoise,
     RenderText,
 )
-from nodetool.dsl.nodetool.image import ColorRef
 from nodetool.dsl.nodetool.output import ImageOutput
 
 # Create a background image
