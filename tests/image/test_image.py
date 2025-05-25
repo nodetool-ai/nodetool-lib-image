@@ -1,5 +1,4 @@
 import pytest
-import numpy as np
 from io import BytesIO
 from PIL import Image
 from nodetool.nodes.lib.pillow import Blend, Composite

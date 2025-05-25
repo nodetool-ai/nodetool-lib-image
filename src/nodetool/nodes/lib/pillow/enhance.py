@@ -1,10 +1,10 @@
 import PIL.Image
-import PIL.ImageOps
-import PIL.ImageFilter
 import PIL.ImageEnhance
+import PIL.ImageFilter
+import PIL.ImageOps
 import numpy as np
 
-from nodetool.metadata.types import Field, ImageRef
+from nodetool.metadata.types import ImageRef
 from nodetool.workflows.base_node import BaseNode
 from nodetool.workflows.processing_context import ProcessingContext
 from pydantic import Field
@@ -20,12 +20,12 @@ def adaptive_contrast(
     # Convert image from BGR to LAB color model
     img_lab = cv2.cvtColor(img, cv2.COLOR_BGR2Lab)
 
-    # Split the LAB image into L, A and B channels
-    l, a, b = cv2.split(img_lab)
+    # Split the LAB image into L, A, and B channels
+    l_channel, a, b = cv2.split(img_lab)
 
     # Perform histogram equalization only on the L channel
     clahe = cv2.createCLAHE(clipLimit=clip_limit, tileGridSize=(grid_size, grid_size))
-    cl = clahe.apply(l)
+    cl = clahe.apply(l_channel)
 
     # Merge the CLAHE enhanced L channel with the original A and B channel
     merged_channels = cv2.merge((cl, a, b))
@@ -72,7 +72,12 @@ class AutoContrast(BaseNode):
     image: ImageRef = Field(
         default=ImageRef(), description="The image to adjust the contrast for."
     )
-    cutoff: int = Field(default=0, ge=0, le=255, description="Represents the percentage of pixels to ignore at both the darkest and lightest ends of the histogram. A cutoff value of 5 means ignoring the darkest 5% and the lightest 5% of pixels, enhancing overall contrast by stretching the remaining pixel values across the full brightness range.")
+    cutoff: int = Field(
+        default=0,
+        ge=0,
+        le=255,
+        description="Represents the percentage of pixels to ignore at both the darkest and lightest ends of the histogram. A cutoff value of 5 means ignoring the darkest 5% and the lightest 5% of pixels, enhancing overall contrast by stretching the remaining pixel values across the full brightness range.",
+    )
 
     async def process(self, context: ProcessingContext) -> ImageRef:
         image = await context.image_to_pil(self.image)

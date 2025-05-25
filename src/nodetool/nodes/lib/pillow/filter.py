@@ -1,4 +1,3 @@
-import os
 from enum import Enum
 import PIL.Image
 import PIL.ImageDraw
@@ -13,7 +12,6 @@ from nodetool.nodes.lib.pillow.enhance import (
 from nodetool.metadata.types import ImageRef
 from nodetool.workflows.base_node import BaseNode
 from pydantic import Field
-from typing import Literal
 
 
 class Invert(BaseNode):

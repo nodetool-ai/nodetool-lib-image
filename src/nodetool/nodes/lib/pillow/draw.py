@@ -1,4 +1,3 @@
-import os
 from enum import Enum
 import PIL.Image
 import PIL.ImageDraw

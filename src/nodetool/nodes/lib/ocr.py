@@ -5,7 +5,6 @@ from pydantic import Field
 from nodetool.workflows.processing_context import ProcessingContext
 from nodetool.workflows.base_node import BaseNode
 from nodetool.workflows.types import NodeUpdate
-from nodetool.workflows.processing_context import ProcessingContext
 from nodetool.metadata.types import ImageRef, OCRResult
 from paddleocr import PaddleOCR
 

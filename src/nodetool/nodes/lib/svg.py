@@ -1,9 +1,7 @@
-import os
 from enum import Enum
-import PIL.Image
 import io
-from typing import Literal, Optional
-from pydantic import BaseModel, Field
+import PIL.Image
+from pydantic import Field
 from nodetool.workflows.base_node import BaseNode
 from nodetool.workflows.processing_context import ProcessingContext
 from nodetool.metadata.types import ColorRef, ImageRef, SVGRef, SVGElement
