@@ -1,12 +1,9 @@
 from enum import Enum
 import PIL.Image
 import PIL.ImageDraw
-import PIL.ImageEnhance
-import PIL.ImageFilter
 import PIL.ImageFont
-import PIL.ImageOps
 from nodetool.workflows.processing_context import ProcessingContext
-from nodetool.metadata.types import ImageRef, ColorRef
+from nodetool.metadata.types import FontRef, ImageRef, ColorRef
 from nodetool.workflows.base_node import BaseNode
 import numpy as np
 from pydantic import Field
@@ -53,29 +50,10 @@ class RenderText(BaseNode):
         CENTER = "center"
         RIGHT = "right"
 
-    class TextFont(str, Enum):
-        DejaVuSansBold = "DejaVuSans-Bold.ttf"
-        DejaVuSans = "DejaVuSans.ttf"
-        FreeSans = "FreeSans.ttf"
-        Arial = "Arial.ttf"
-        # Common Windows & Mac Fonts
-        TimesNewRoman = "Times New Roman.ttf"
-        Helvetica = "Helvetica.ttf"
-        Calibri = "Calibri.ttf"
-        Verdana = "Verdana.ttf"
-        Georgia = "Georgia.ttf"
-        CourierNew = "Courier New.ttf"
-        Impact = "Impact.ttf"
-        ComicSansMS = "Comic Sans MS.ttf"
-        Tahoma = "Tahoma.ttf"
-        SegoeUI = "Segoe UI.ttf"
-        # Mac-specific fonts
-        SFPro = "SF Pro.ttf"
-        Menlo = "Menlo.ttf"
-        Monaco = "Monaco.ttf"
-
     text: str = Field(default="", description="The text to render.")
-    font: TextFont = Field(default=TextFont.DejaVuSans, description="The font to use.")
+    font: FontRef = Field(
+        default=FontRef(name="DejaVuSans"), description="The font to use."
+    )
     x: int = Field(default=0, ge=0, description="The x coordinate.")
     y: int = Field(default=0, ge=0, description="The y coordinate.")
     size: int = Field(default=12, ge=1, le=512, description="The font size.")
@@ -88,7 +66,7 @@ class RenderText(BaseNode):
     async def process(self, context: ProcessingContext) -> ImageRef:
         image = await context.image_to_pil(self.image)
         draw = PIL.ImageDraw.Draw(image)
-        font_path = context.get_system_font_path(self.font.value)
+        font_path = context.get_system_font_path(self.font.name)
         font = PIL.ImageFont.truetype(font_path, self.size)
         draw.text(
             (self.x, self.y),
