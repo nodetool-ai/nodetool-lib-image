@@ -7,29 +7,17 @@ name = "nodetool-lib-image"
 version = "0.6.0"
 description = "Nodetool Image nodes"
 readme = "README.md"
-authors = [
-    {name = "Matthias Georgi", email = "matti.georgi@gmail.com"}
-]
+authors = [{ name = "Matthias Georgi", email = "matti.georgi@gmail.com" }]
 requires-python = ">=3.11"
 
-dependencies = [
-    "nodetool-core>=0.6.0,<0.7.0",
-    "cairosvg==2.7.1",
-]
+dependencies = ["nodetool-core>=0.6.0,<0.7.0", "cairosvg==2.7.1"]
 
 
 [project.optional-dependencies]
-# For development with local nodetool-core
-dev = [
-    "nodetool-core @ file:///../nodetool-core",
-]
 # For exact version pinning in production
-stable = [
-    "nodetool-core==0.6.0",
-]
+stable = ["nodetool-core==0.6.0"]
 
 [tool.hatch.metadata]
-allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/nodetool"]
